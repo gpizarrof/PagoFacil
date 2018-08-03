@@ -1,10 +1,11 @@
 package com.pagofacil.activities;
 
+import android.support.v4.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
+import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,18 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.zxing.Result;
+import com.pagofacil.fragments.VincularTarjetas;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import lombok.Getter;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button btnPay;
-    private Button btnBuy;
+    private Button btnPagar;
+    private Button btnCobrar;
+    private FragmentManager fragmentManager;
 
+    @Getter
+    private boolean multiPanel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,13 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        btnPagar = (Button) findViewById(R.id.pagar);
+        btnCobrar = (Button) findViewById(R.id.cobrar);
 
+
+
+        fragmentManager = getSupportFragmentManager();
+        setMultiPanel();
     }
 
     @Override
@@ -122,5 +130,26 @@ public class HomeActivity extends AppCompatActivity
     public void buy(View view) {
         Intent intent = new Intent(getApplicationContext(), BuyActivity.class);
         startActivity(intent);
+    }
+
+    public void vincular(View view) {
+
+
+        if(isMultiPanel()){
+            //VincularTarjetas vistaVincularTarjetas = (VincularTarjetas) getSupportFragmentManager().findFragmentById(R.id.vincularTarjetaFragment);
+            VincularTarjetas vistaVincularTarjetas = new VincularTarjetas();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(android.R.id.content, vistaVincularTarjetas).commit();
+            btnPagar.setVisibility(View.GONE);
+            btnCobrar.setVisibility(View.GONE);
+        }else{
+            btnPagar.setVisibility(View.VISIBLE);
+            btnCobrar.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private void setMultiPanel(){
+        multiPanel = (getSupportFragmentManager().findFragmentById(R.id.vincularTarjetaFragment) != null);
     }
 }

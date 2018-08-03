@@ -35,7 +35,7 @@
         <activity
             android:name=".BuyActivity"
             android:label="@string/title_activity_buy"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
