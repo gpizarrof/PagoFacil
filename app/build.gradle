@@ -33,7 +33,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.0'
 
     //libreria de google play services para leer QR
-    compile 'com.google.android.gms:play-services-vision:11.2.2'
+    implementation 'com.google.android.gms:play-services-vision:11.2.2'
 
-    compile 'me.dm7.barcodescanner:zxing:1.8.4'
+    implementation 'me.dm7.barcodescanner:zxing:1.8.4'
 }
