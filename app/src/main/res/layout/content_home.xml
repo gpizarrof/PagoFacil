@@ -48,14 +48,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-    
-    <fragment
-        android:id="@+id/vincularTarjetaFragment"
-        android:name="com.pagofacil.fragments.VincularTarjetas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:visibility="invisible"
-        tools:layout="@layout/vincular_tarjetas" />
-    
+
+
+
+
 </android.support.constraint.ConstraintLayout>

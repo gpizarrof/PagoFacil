@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.pagofacil.fragments.VincularTarjetas;
 
@@ -25,10 +27,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private Button btnPagar;
     private Button btnCobrar;
+    private Button btnVincular;
     private FragmentManager fragmentManager;
-
-    @Getter
-    private boolean multiPanel;
+    private VincularTarjetas vincularTarjetas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,15 +37,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -57,11 +49,19 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         btnPagar = (Button) findViewById(R.id.pagar);
         btnCobrar = (Button) findViewById(R.id.cobrar);
+        btnVincular = (Button) findViewById(R.id.vicular);
 
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        btnVincular.setEnabled(true);
+    }
 
-        fragmentManager = getSupportFragmentManager();
-        setMultiPanel();
+    @Override
+    protected void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -133,23 +133,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void vincular(View view) {
-
-
-        if(isMultiPanel()){
-            //VincularTarjetas vistaVincularTarjetas = (VincularTarjetas) getSupportFragmentManager().findFragmentById(R.id.vincularTarjetaFragment);
-            VincularTarjetas vistaVincularTarjetas = new VincularTarjetas();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(android.R.id.content, vistaVincularTarjetas).commit();
-            btnPagar.setVisibility(View.GONE);
-            btnCobrar.setVisibility(View.GONE);
-        }else{
-            btnPagar.setVisibility(View.VISIBLE);
-            btnCobrar.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    private void setMultiPanel(){
-        multiPanel = (getSupportFragmentManager().findFragmentById(R.id.vincularTarjetaFragment) != null);
+        view.setEnabled(false);
+        Intent intent = new Intent(getApplicationContext(), VincularActivity.class);
+        startActivity(intent);
     }
 }
